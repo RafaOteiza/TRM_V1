@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrito de Compras</title>
+    <link rel="stylesheet" href="{% static 'myapp/css/style.css' %}">
+</head>
+<body>
+    <div class="container">
+        <h2>Carrito de Compras</h2>
+        <div id="cart-container">
+            <!-- El contenido del carrito se generará aquí dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const cartContainer = document.getElementById('cart-container');
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            updateCart(cart);
+
+            function updateCart(cart) {
+                cartContainer.innerHTML = '';
+                if (cart.length === 0) {
+                    cartContainer.innerHTML = '<p>No hay productos en el carrito.</p>';
+                    return;
+                }
+
+                cart.forEach(promo => {
+                    const htmlContent = `
+                        <div class="cart-item">
+                            <h3>${promo.titulo}</h3>
+                            <p>Precio: $${promo.precio}</p>
+                            <p>Cantidad: ${promo.quantity}</p>
+                        </div>`;
+                    cartContainer.innerHTML += htmlContent;
+                });
+            }
+        });
+    </script>
+</body>
+</html>
